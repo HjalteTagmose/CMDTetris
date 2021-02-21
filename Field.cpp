@@ -7,8 +7,7 @@ Field::Field() : width(12), height(18)
 	// Create border
 	for (int x = 0; x < width; x++)
 		for (int y = 0; y < height; y++)
-			field[y * width + x] =
-				(x == 0 || x == width - 1 || y == height - 1) ? 9 : 0; 
+			field[y * width + x] = (x == 0 || x == width - 1 || y == height - 1); 
 }
 
 void Field::Place(Tetromino piece)
@@ -17,7 +16,7 @@ void Field::Place(Tetromino piece)
 		for (int py = 0; py < 4; py++)
 		{
 			if (piece.IsSolid(px, py))
-				Set(piece.x + px, piece.y + py, piece.type + 1); //0=emptyspace
+				Set(piece.x + px, piece.y + py, 2); //0=emptyspace,1=wall,2=piece
 		}
 }
 

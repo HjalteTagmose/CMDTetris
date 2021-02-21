@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class Tetromino
 {
 public:
@@ -6,7 +6,9 @@ public:
 	int rotation;
 	int x;
 	int y;
+	wchar_t graphic = L'█';
 	Tetromino();
+	Tetromino(wchar_t c);
 	void Reset();
 	void Move(int adjX, int adjY);
 	void Rotate(int adj);

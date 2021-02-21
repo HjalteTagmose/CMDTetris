@@ -1,10 +1,10 @@
-#include "Renderer.h"
+﻿#include "Renderer.h"
 
 const int width = 80;
 const int height = 30;
 const int offset = 2;
 
-Renderer::Renderer() : theme(L" ABCDEFG=#")
+Renderer::Renderer()
 {
 	// Screen buffer
 	screen = new wchar_t[width * height];
@@ -27,7 +27,7 @@ void Renderer::Render(Field field)
 {
 	for (int x = 0; x < field.width; x++)
 		for (int y = 0; y < field.height; y++)
-			screen[GetIndex(x, y)] = theme[field.Get(x, y)];
+			screen[GetIndex(x, y)] = L" ▓█"[field.Get(x, y)];
 }
 
 void Renderer::Render(Tetromino piece)
@@ -35,7 +35,7 @@ void Renderer::Render(Tetromino piece)
 	for (int px = 0; px < 4; px++)
 		for (int py = 0; py < 4; py++)
 			if (piece.IsSolid(px, py))
-				screen[ GetIndex(piece.x + px, piece.y + py) ] = theme[piece.type+1];
+				screen[ GetIndex(piece.x + px, piece.y + py) ] = piece.graphic;
 }
 
 void Renderer::Render()

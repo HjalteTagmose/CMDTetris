@@ -32,9 +32,9 @@
 *.app
 
 # Project files
-*.sln
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
+#*.sln
+#*.vcxproj
+#*.vcxproj.filters
+#*.vcxproj.user
 .vs/
 Debug/

@@ -1,4 +1,4 @@
-#include "unicode.h"
+﻿#include "unicode.h"
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -13,8 +13,9 @@ using namespace std;
 
 Renderer renderer;
 Field field;
-Tetromino piece;
-Tetromino ghost;
+Tetromino piece(L'█');
+Tetromino ghost(L'░');
+Tetromino nextp(L'█');
 Input input;
 
 bool TryMovePiece(int dx, int dy, int dr)
@@ -39,7 +40,8 @@ bool TryMovePiece(int dx, int dy, int dr)
 void PlacePiece()
 {
 	field.Place(piece);
-	piece.Reset();
+	piece.Copy(nextp);
+	nextp.Reset();
 }
 
 int main()
