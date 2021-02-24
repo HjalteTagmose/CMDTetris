@@ -11,8 +11,10 @@ class Renderer
 public:
 	Renderer();
 	~Renderer();
+	void Close();
 	void Render(Field field);
 	void Render(Tetromino piece, int offsetX = 0, int offsetY = 0);
+	void RenderText(wstring text, int x, int y);
 	void RenderBlock(wstring graphic, int w, int h, int x, int y);
 	void RenderLines(vector<int> lines, Field field);
 	void Render();

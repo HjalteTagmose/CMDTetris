@@ -20,6 +20,11 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
+	Close();
+}
+
+void Renderer::Close()
+{
 	CloseHandle(hConsole);
 }
 
@@ -40,6 +45,11 @@ void Renderer::Render(Tetromino piece, int offsetX, int offsetY)
 				int y = piece.y + py + offsetY;
 				screen[GetIndex(x, y)] = piece.graphic;
 			}
+}
+
+void Renderer::RenderText(wstring text, int x, int y)
+{
+	RenderBlock(text, text.length(), 1, x, y);
 }
 
 void Renderer::RenderBlock(wstring graphic, int w, int h, int x, int y)

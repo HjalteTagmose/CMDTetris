@@ -17,6 +17,5 @@ public:
 	bool DoesPieceFit(Tetromino piece);
 private:
 	unsigned char* field = nullptr;
-	void RemoveLine(int y);
 };
 

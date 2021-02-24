@@ -78,10 +78,6 @@ bool Field::DoesPieceFit(Tetromino piece)
 	return true;
 }
 
-void Field::RemoveLine(int y)
-{
-}
-
 char Field::Get(int x, int y) const
 {
 	return field[y * width + x];
