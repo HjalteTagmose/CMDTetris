@@ -18,7 +18,12 @@ Tetromino piece(L'█');
 Tetromino ghost(L'░');
 Tetromino nextp(L'█');
 Tetromino* holdp;
+
 bool usingHeld = false;
+bool gameOver = false;
+int piecesPlaced = 0;
+int speed = 20;
+int speedCounter = 0;
 
 bool TryMovePiece(int dx, int dy, int dr)
 {
@@ -47,9 +52,16 @@ void NextPiece()
 
 void PlacePiece()
 {
+	piecesPlaced++;
+	if (piecesPlaced % 10 == 0)
+		speed -= speed < 10? 0 : 1;
+
 	usingHeld = false;
-	field.Place(piece);
+	vector<int> lines = field.Place(piece);
 	NextPiece();
+
+	renderer.RenderLines(lines, field);
+	field.RemoveLines(lines);
 }
 
 void HoldPiece()
@@ -77,10 +89,6 @@ void HoldPiece()
 
 int main()
 {
-	bool gameOver = false;
-	int speed = 20;
-	int speedCounter = 0;
-
 	while (!gameOver)
 	{
 		this_thread::sleep_for(50ms);
@@ -263,5 +271,6 @@ int main()
 	//system("pause");
 	#pragma endregion
 	
+	delete holdp;
 	return 0;
 }

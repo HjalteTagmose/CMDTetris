@@ -50,6 +50,29 @@ void Renderer::RenderBlock(wstring graphic, int w, int h, int x, int y)
 			screen[GetIndex(dx, dy)] = graphic[i++];
 }
 
+void Renderer::RenderLines(vector<int> lines, Field field)
+{
+	Render(field);
+
+	if (!lines.empty())
+	{
+		for (auto& y : lines)
+			RenderLine(y, field.width);
+		Render();
+
+		this_thread::sleep_for(400ms);
+	}
+	lines.clear();
+}
+
+void Renderer::RenderLine(int y, int width)
+{
+	for (int x = 0; x < width; x++)
+	{
+		screen[GetIndex(x, y)] = L'░';
+	}
+}
+
 void Renderer::Render()
 {
 	WriteConsoleOutputCharacter(hConsole, screen, width * height, { 0,0 }, &dwBytesWritten);
