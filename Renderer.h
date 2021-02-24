@@ -11,11 +11,9 @@ public:
 	Renderer();
 	~Renderer();
 	void Render(Field field);
-	void Render(Tetromino piece);
+	void Render(Tetromino piece, int offsetX = 0, int offsetY = 0);
+	void RenderBlock(wstring graphic, int w, int h, int x, int y);
 	void Render();
-
-
-
 private:
 	wstring theme;
 	wchar_t* screen;

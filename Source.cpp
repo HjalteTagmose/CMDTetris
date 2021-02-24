@@ -12,11 +12,13 @@
 using namespace std;
 
 Renderer renderer;
+Input input;
 Field field;
 Tetromino piece(L'█');
 Tetromino ghost(L'░');
 Tetromino nextp(L'█');
-Input input;
+Tetromino* holdp;
+bool usingHeld = false;
 
 bool TryMovePiece(int dx, int dy, int dr)
 {
@@ -37,11 +39,40 @@ bool TryMovePiece(int dx, int dy, int dr)
 	return false;
 }
 
-void PlacePiece()
+void NextPiece()
 {
-	field.Place(piece);
 	piece.Copy(nextp);
 	nextp.Reset();
+}
+
+void PlacePiece()
+{
+	usingHeld = false;
+	field.Place(piece);
+	NextPiece();
+}
+
+void HoldPiece()
+{
+	if (usingHeld) return;
+	usingHeld = true;
+	piece.x = 0;
+	piece.y = 0;
+	piece.rotation = 0;
+
+	if (!holdp)
+	{
+		holdp = new Tetromino(L'█');
+		holdp->Copy(piece);
+		NextPiece();
+	}
+	else
+	{
+		Tetromino temp(L'█');
+		temp.Copy(piece);
+		piece.Copy(*holdp);
+		holdp->Copy(temp);
+	}
 }
 
 int main()
@@ -62,6 +93,9 @@ int main()
 			dr = input.OnKeyPressed(input.Rotate);
 
 		TryMovePiece(dx, dy, dr);
+
+		if (input.OnKeyPressed(input.Hold))
+			HoldPiece();
 
 		// GHOST PIECE
 		while (field.DoesPieceFit(ghost))
@@ -87,6 +121,17 @@ int main()
 		renderer.Render(field);
 		renderer.Render(ghost);
 		renderer.Render(piece);
+
+		// Next
+		renderer.RenderBlock(L"Next:", 5, 1, 20, 0);
+		renderer.RenderBlock(L"╔════╗║    ║║    ║║    ║║    ║╚════╝", 6, 6, 20, 1);
+		renderer.Render(nextp, 21, 2);
+
+		// Hold
+		renderer.RenderBlock(L"Hold:", 5, 1, 20, 10);
+		renderer.RenderBlock(L"╔════╗║    ║║    ║║    ║║    ║╚════╝", 6, 6, 20, 11);
+		if (holdp) renderer.Render(*holdp, 21, 12);
+
 		renderer.Render();
 	}
 

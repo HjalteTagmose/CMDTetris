@@ -30,12 +30,24 @@ void Renderer::Render(Field field)
 			screen[GetIndex(x, y)] = L" ▓█"[field.Get(x, y)];
 }
 
-void Renderer::Render(Tetromino piece)
+void Renderer::Render(Tetromino piece, int offsetX, int offsetY)
 {
 	for (int px = 0; px < 4; px++)
 		for (int py = 0; py < 4; py++)
 			if (piece.IsSolid(px, py))
-				screen[ GetIndex(piece.x + px, piece.y + py) ] = piece.graphic;
+			{
+				int x = piece.x + px + offsetX;
+				int y = piece.y + py + offsetY;
+				screen[GetIndex(x, y)] = piece.graphic;
+			}
+}
+
+void Renderer::RenderBlock(wstring graphic, int w, int h, int x, int y)
+{
+	int i = 0;
+	for (int dy = y; dy < h+y; dy++)
+		for (int dx = x; dx < w+x; dx++)
+			screen[GetIndex(dx, dy)] = graphic[i++];
 }
 
 void Renderer::Render()
